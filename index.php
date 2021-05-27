@@ -1,71 +1,141 @@
-<!DOCTYPE html>
-
 <?php
-  include('classes/conn.php');
-  include('classes/classes.php');
+    session_start();
+    include 'includes/env.inc.php';
+    include 'includes/autoloader.php';
 
-  if(isset($_SESSION['ascosUser']) && $_SESSION['ascosUser'] == "admin"){
-    header("Location: admin-home.php");
-  } else if(isset($_SESSION['ascosUser']) && $_SESSION['ascosUser'] !== "admin"){
-    header("Location: home.php");
-  }
+    /** Head Tags */
+    include 'includes/head.inc.php';
 ?>
-
-
-<html >
-<head>
-  <!-- Site made with Mobirise Website Builder v4.5.1, https://mobirise.com -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <meta name="description" content="">
-  <title>eBanking solutions - <?php echo $companyName; ?> </title>
-  <?php include 'classes/headtags.php'; ?>
-</head>
 <body>
-<section class="mbr-section form3 cid-qRQhBErkzv" id="form3-5" data-rv-view="75">
+    <?php
+        include 'includes/navbar.inc.php';
+        
+        include 'includes/router.inc.php';
+
+        /** User Authentication */
+        function userAuth($url){
+            if(isset($_SESSION['eb_user_session']) || isset($_SESSION['eb_admin_session'])){
+                return $url;
+            } else {
+                return 'views/index.view.php';
+            }
+        }
+
+        /** Admin Authentication */
+        function adminAuth($url){
+            if(isset($_SESSION['eb_admin_session'])){
+                return $url;
+            } else {
+                return 'views/index.view.php';
+            }
+        }
+        
+
+        /** Index Page */
+        route('/', function(){ 
+            if(isset($_SESSION['eb_user_session'])){
+                echo "<script> window.location = '".$rootURL."home'; </script>";
+            } else if(isset($_SESSION['eb_admin_session'])){
+                echo "<script> window.location = '".$rootURL."admin'; </script>";
+            } else {
+                include 'views/index.view.php'; 
+            }
+        });
+
+        /** 
+         * REGULAR USER ROUTES BEGINS HERE
+         */
+
+        /** Homepage after login */
+        route('/home', function(){ 
+            $url = userAuth('views/home.view.php');
+            include $url;
+        });
+
+        /** User profile page */
+        route('/profile', function(){ 
+            $url = userAuth('views/profile.view.php');
+            include $url;
+        });
+
+        /** User Current Month Transactions page */
+        route('/transactions', function(){ 
+            $url = userAuth('views/transactions.view.php');
+            include $url;
+        });
+
+        /** User Current Month Transactions page */
+        route('/reset-successful', function(){ 
+            $url = 'views/reset-successful.view.php';
+            include $url;
+        });
+
+        /** 
+         * REGULAR USER ROUTES ENDS HERE
+         */
 
 
 
+        /** 
+         * ADMIN ROUTES BEGINS HERE
+         */
 
+        /** Homepage After Login */
+        route('/admin', function(){ 
+            $url = adminAuth('views/admin-home.view.php');
+            include $url;
+        });
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="title col-12 col-lg-8">
-                <h2 class="align-center pb-2 mbr-fonts-style display-2">eBanking Solution</h2>
-                <h3 class="mbr-section-subtitle align-center pb-5 mbr-light mbr-fonts-style display-5">Login to access</h3>
-            </div>
-        </div>
+        /** Manage Transactions Page */
+        route('/admin/transactions', function(){ 
+            $url = adminAuth('views/admin-transactions.view.php');
+            include $url;
+        });
 
-        <div class="row py-2 justify-content-center">
-            <div class="col-12 col-lg-6  col-md-8">
-                <?php include('classes/alert.php'); ?>
+        /** Add Transaction Page */
+        route('/admin/transactions/add', function(){ 
+            $url = adminAuth('views/add-transaction.view.php');
+            include $url;
+        });
 
-                <form class="mbr-form" action="" method="post" align="center">
-                    <div class="mbr-subscribe">
-                        <input class="form-control" type="text" name="acctno" placeholder="Account Number" data-form-field="Account Number" required="" id="email-form3-5" style="border-radius: 30px; margin-bottom: 10px">
-                        <input class="form-control" type="password" name="pword" placeholder="Password" data-form-field="Password" required="" style="border-radius: 30px; margin-bottom: 10px">
-                        <span class="input-group-btn">
-                            <button name="ulogin" type="submit" class="btn btn-primary  display-4">LOGIN</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+        /** Manage Users Page */
+        route('/admin/users', function(){ 
+            $url = adminAuth('views/admin-users.view.php');
+            include $url;
+        });
 
-<?php include('classes/footer.php'); ?>
+        /** Add a User Page */
+        route('/admin/users/add', function(){ 
+            $url = adminAuth('views/add-user.view.php');
+            include $url;
+        });
 
+        /** Manage A User Page */
+        route('/admin/user/(.+)/?', function($id){ 
+            $id = $id;
+            $url = adminAuth('views/admin-user.view.php');
+            include $url;
+        });
 
-  <script src="assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="assets/popper/popper.min.js"></script>
-  <script src="assets/tether/tether.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/smoothscroll/smooth-scroll.js"></script>
-  <script src="assets/theme/js/script.js"></script>
-  <script src="assets/formoid/formoid.min.js"></script>
+        /** 
+         * ADMIN ROUTES ENDS HERE
+         */
 
+        /** Logout */
+        route('/logout', function(){
+            session_destroy();
+            echo "<script> window.location = '".$rootURL."home'; </script>";
+        });
 
+        $action = $_SERVER['REQUEST_URI'];
+        dispatch($action);
+    ?>
+
+    <?php
+        include 'includes/footer.inc.php';
+
+        /** Javacripts */
+        include 'includes/scripts.inc.php';
+    ?>
 </body>
 </html>

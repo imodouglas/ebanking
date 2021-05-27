@@ -1,0 +1,188 @@
+html, body {
+  height: 100%;
+}
+
+a {
+  color: #0aacec;
+}
+a:link {
+  color: #0aacec;
+  text-decoration: none;
+}
+a:visited {
+  color: #0aacec;
+  text-decoration: none;
+}
+a:hover {
+  color: #555;
+  text-decoration: none;
+}
+
+label {
+  font-size: 12px;
+}
+
+.p10 {
+  padding: 10px !important;
+}
+
+.m0 {
+  margin: 0 !important;
+}
+
+.bottom-line {
+  border-bottom: #ccc thin solid;
+}
+
+.white-border {
+  border: #fff thin solid !important;
+}
+.white-border-right {
+  border-right: #fff thin solid !important;
+}
+
+.header {
+  min-height: 100vh;
+  background: url("../../assets/images/header.jpg");
+  background-position: center center;
+  background-size: cover;
+}
+
+.header-title {
+  font-size: 38px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.header-sub-title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.7;
+  position: absolute;
+}
+
+.flexBox {
+  padding: 20px;
+  padding-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.section {
+  padding: 30px 10px;
+  min-height: 85vh;
+}
+
+.navbar-bg {
+  background: #085094 !important;
+}
+
+.navbar-brand {
+  color: #fff !important;
+}
+.navbar-brand:hover {
+  color: #ccc !important;
+}
+
+.navbar-toggler {
+  border: 1px solid #fff !important;
+}
+
+.card-box {
+  background: #f0f0f0;
+  border: #ccc;
+  box-shadow: #999 0px 2px 8px;
+  margin-bottom: 30px;
+}
+.card-box-heading {
+  background: #0aacec;
+  color: #222;
+  font-weight: 800;
+  padding: 10px;
+}
+.card-box-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 32px;
+  color: #0aacec;
+}
+
+.btn-padding, .trans-status, .trans-status-cancelled, .trans-status-complete, .trans-status-pending {
+  padding: 2px 10px;
+}
+
+.pending-color {
+  color: #9b1f0a;
+}
+
+.complete-color {
+  color: #085094;
+}
+
+.gray-color {
+  color: #444;
+}
+
+.white-color {
+  color: #fff;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.pending-bg, .trans-status-pending {
+  background: #9b1f0a;
+  color: #fff;
+}
+
+.complete-bg, .trans-status-complete {
+  background: #085094;
+  color: #fff;
+}
+
+.trans {
+  color: #000;
+}
+.trans-desc {
+  font-size: 18px;
+  font-weight: 600;
+}
+.trans-date {
+  font-size: 14px;
+  color: #0aacec;
+}
+.trans-status, .trans-status-cancelled, .trans-status-complete, .trans-status-pending {
+  font-size: 11px;
+  border-radius: 5px;
+}
+.trans-status-cancelled {
+  background: #555;
+  color: #fff;
+}
+.trans-amount {
+  font-size: 24px;
+}
+.trans-balance {
+  font-size: 13px;
+}
+
+.footer {
+  background: #111;
+  color: #ccc;
+  padding: 20px;
+}/*# sourceMappingURL=styles.css.map */

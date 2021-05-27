@@ -1,0 +1,3 @@
+The SQL file only contains tables of the database. To install, please create a database and import the SQL file as tables.
+
+The database can be configuration can be found in {home_directory}/classes/database/Db.class.php
